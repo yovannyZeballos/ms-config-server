@@ -1,0 +1,32 @@
+spring:
+  profiles:
+    active: default
+  application:
+    name: ms-config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/yovannyZeballos/ms-configs.git
+          default-label: main
+          clone-on-start: true
+          username: yovannyZeballos
+          password: ${GIT_TOKEN}
+
+server:
+  port: 7777
+
+eureka:
+  instance:
+    instanceId: "${spring.application.name}:${random.value}"
+  client:
+    serviceUrl:
+      defaultZone: ${URL_EUREKA}
+
+
+logging:
+  pattern:
+    console: '%d{yyyy-MM-dd HH:mm:ss.SSS} %magenta([%thread]) [%-5level] %msg%n'
+    file: '%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n'
+  level:
+    org.springframework.web: ERROR
